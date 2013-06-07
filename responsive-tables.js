@@ -1,16 +1,17 @@
 $(document).ready(function() {
     var switched = false;
+    var selector = "table.responsive";
     var updateTables = function() {
         if (($(window).width() < 767) && !switched ){
             switched = true;
-            $("table.responsive").each(function(i, element) {
+            $(selector).each(function(i, element) {
                 splitTable($(element));
             });
             return true;
         }
         else if (switched && ($(window).width() > 767)) {
             switched = false;
-            $("table.responsive").each(function(i, element) {
+            $(selector).each(function(i, element) {
                 unsplitTable($(element));
             });
         }
