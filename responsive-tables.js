@@ -1,3 +1,6 @@
+/**
+ * Zurb Responsive Tables
+ */
 $(document).ready(function() {
     var switched = false;
     var selector = "table.responsive";
@@ -20,7 +23,6 @@ $(document).ready(function() {
     $(window).load(updateTables);
     $(window).on("redraw",function(){switched=false;updateTables();}); // An event to listen for
     $(window).on("resize", updateTables);
-     
     
     function splitTable(original)
     {
@@ -28,6 +30,7 @@ $(document).ready(function() {
         
         var copy = original.clone();
         copy.find("td:not(:first-child), th:not(:first-child)").css("display", "none");
+        copy.add(original).find('caption').hide();
         copy.removeClass("responsive");
         
         original.closest(".table-wrapper").append(copy);
@@ -45,8 +48,8 @@ $(document).ready(function() {
 
     function setCellHeights(original, copy) {
         var tr = original.find('tr'),
-                tr_copy = copy.find('tr'),
-                heights = [];
+            tr_copy = copy.find('tr'),
+            heights = [];
 
         tr.each(function (index) {
             var self = $(this),
@@ -57,10 +60,13 @@ $(document).ready(function() {
                 heights[index] = heights[index] || 0;
                 if (height > heights[index]) heights[index] = height;
             });
+            
+            $(this).height(heights[index]);
 
         });
 
         tr_copy.each(function (index) {
+    		console.log('setting height',$(this)[0]);
             $(this).height(heights[index]);
         });
     }
